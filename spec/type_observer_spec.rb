@@ -21,13 +21,23 @@ describe TypeObserver do
 
   it "notices when instance methods in registered classes are called" do
     TestClass.new.test_method(2, 3)
+    result = TypeObserver::TypeSignature.new(
+      method: "TestClass#test_method",
+      arguments: [Fixnum, Fixnum],
+      result: Fixnum,
+    )
 
-    expect(observer.method_calls).to include("TestClass#test_method")
+    expect(observer.method_calls).to include(result)
   end
 
   it "notices when class methods in registered classes are called" do
     TestClass.test_class_method(2, 3)
+    result = TypeObserver::TypeSignature.new(
+      method: "TestClass.test_class_method",
+      arguments: [Fixnum, Fixnum],
+      result: Fixnum,
+    )
 
-    expect(observer.method_calls).to include("TestClass.test_class_method")
+    expect(observer.method_calls).to include(result)
   end
 end

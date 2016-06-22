@@ -1,5 +1,6 @@
 require "securerandom"
 require "singleton"
+require_relative "type_signature"
 
 module TypeObserver
   class Observer
@@ -41,11 +42,17 @@ module TypeObserver
         alias_method(aliased_method_name, method_name)
 
         define_method(method_name) do |*args|
+          result = public_send(aliased_method_name, *args)
+
           TypeObserver::Observer.instance.register_call(
-            "#{ klass }##{ method_name }",
+            TypeObserver::TypeSignature.new(
+              method: "#{ klass }##{ method_name }",
+              arguments: args.map(&:class),
+              result: result.class,
+            ),
           )
 
-          public_send(aliased_method_name, *args)
+          result
         end
       end
     end
@@ -61,11 +68,17 @@ module TypeObserver
         )
 
         define_singleton_method(method_name) do |*args|
+          result = public_send(aliased_method_name, *args)
+
           TypeObserver::Observer.instance.register_call(
-            "#{ klass }.#{ method_name }",
+            TypeObserver::TypeSignature.new(
+              method: "#{ klass }.#{ method_name }",
+              arguments: args.map(&:class),
+              result: result.class,
+            ),
           )
 
-          public_send(aliased_method_name, *args)
+          result
         end
       end
     end
