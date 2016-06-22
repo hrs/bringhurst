@@ -28,12 +28,14 @@ module TypeObserver
       end
     end
 
-    def instance_methods_of(klass)
-      klass.instance_methods(false)
+    def wrap_class_methods_of(klass)
+      class_methods_of(klass).each do |method_name|
+        wrap_class_method(klass, method_name)
+      end
     end
 
     def wrap_instance_method(klass, method_name)
-      aliased_method_name = generate_aliased_method_name_for(method_name)
+      aliased_method_name = aliased_method_name_for(method_name)
 
       klass.class_eval do
         alias_method(aliased_method_name, method_name)
@@ -48,14 +50,8 @@ module TypeObserver
       end
     end
 
-    def wrap_class_methods_of(klass)
-      class_methods_of(klass).each do |method_name|
-        wrap_class_method(klass, method_name)
-      end
-    end
-
     def wrap_class_method(klass, method_name)
-      aliased_method_name = generate_aliased_method_name_for(method_name)
+      aliased_method_name = aliased_method_name_for(method_name)
 
       klass.class_eval do
         singleton_class.send(
@@ -74,11 +70,15 @@ module TypeObserver
       end
     end
 
+    def instance_methods_of(klass)
+      klass.instance_methods(false)
+    end
+
     def class_methods_of(klass)
       klass.methods(false)
     end
 
-    def generate_aliased_method_name_for(method_name)
+    def aliased_method_name_for(method_name)
       "#{ method_name }_#{ SecureRandom.uuid }"
     end
   end
