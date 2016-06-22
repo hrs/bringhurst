@@ -17,4 +17,16 @@ describe TypeObserver::TypeSignature do
       expect(sig_a).to eq(sig_b)
     end
   end
+
+  describe "#to_s" do
+    it "formats the signature in a Haskell-y style" do
+      signature = TypeObserver::TypeSignature.new(
+        method: "SomeClass#foo",
+        arguments: [Fixnum, String],
+        result: Fixnum,
+      )
+
+      expect(signature.to_s).to eq("SomeClass#foo: Fixnum -> String -> Fixnum")
+    end
+  end
 end
