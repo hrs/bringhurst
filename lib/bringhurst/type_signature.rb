@@ -16,7 +16,7 @@ module Bringhurst
     end
 
     def to_s
-      "#{ method }: #{ arguments.map(&:to_s).join(" -> ") } -> #{ result }"
+      "#{ method }: #{ (arguments + [result]).map(&:to_s).join(" -> ") }"
     end
   end
 end

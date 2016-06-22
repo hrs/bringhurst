@@ -28,5 +28,17 @@ describe Bringhurst::TypeSignature do
 
       expect(signature.to_s).to eq("SomeClass#foo: Fixnum -> String -> Fixnum")
     end
+
+    context "when the method doesn't take any arguments" do
+      it "doesn't use any arrows" do
+        signature = Bringhurst::TypeSignature.new(
+          method: "SomeClass#foo",
+          arguments: [],
+          result: Fixnum,
+        )
+
+        expect(signature.to_s).to eq("SomeClass#foo: Fixnum")
+      end
+    end
   end
 end
