@@ -22,7 +22,9 @@ describe Bringhurst::TypeObserver do
   it "notices when instance methods in registered classes are called" do
     TestClass.new.test_method(2, 3)
     result = Bringhurst::TypeSignature.new(
-      method: "TestClass#test_method",
+      klass: TestClass,
+      method: :test_method,
+      method_kind: :instance,
       arguments: [Fixnum, Fixnum],
       result: Fixnum,
     )
@@ -33,7 +35,9 @@ describe Bringhurst::TypeObserver do
   it "notices when class methods in registered classes are called" do
     TestClass.test_class_method(2, 3)
     result = Bringhurst::TypeSignature.new(
-      method: "TestClass.test_class_method",
+      klass: TestClass,
+      method: :test_class_method,
+      method_kind: :class,
       arguments: [Fixnum, Fixnum],
       result: Fixnum,
     )

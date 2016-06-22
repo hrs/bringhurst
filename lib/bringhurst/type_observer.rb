@@ -46,7 +46,9 @@ module Bringhurst
 
           Bringhurst::TypeObserver.instance.register_call(
             Bringhurst::TypeSignature.new(
-              method: "#{ klass }##{ method_name }",
+              klass: klass,
+              method: method_name,
+              method_kind: :instance,
               arguments: args.map(&:class),
               result: result.class,
             ),
@@ -72,7 +74,9 @@ module Bringhurst
 
           Bringhurst::TypeObserver.instance.register_call(
             Bringhurst::TypeSignature.new(
-              method: "#{ klass }.#{ method_name }",
+              klass: klass,
+              method: method_name,
+              method_kind: :class,
               arguments: args.map(&:class),
               result: result.class,
             ),
