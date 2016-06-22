@@ -1,3 +1,3 @@
-module TypeObserver
+module Bringhurst
   VERSION = "0.1.0"
 end

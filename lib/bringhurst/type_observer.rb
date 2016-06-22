@@ -2,8 +2,8 @@ require "securerandom"
 require "singleton"
 require_relative "type_signature"
 
-module TypeObserver
-  class Observer
+module Bringhurst
+  class TypeObserver
     include Singleton
 
     attr_reader :method_calls
@@ -44,8 +44,8 @@ module TypeObserver
         define_method(method_name) do |*args|
           result = public_send(aliased_method_name, *args)
 
-          TypeObserver::Observer.instance.register_call(
-            TypeObserver::TypeSignature.new(
+          Bringhurst::TypeObserver.instance.register_call(
+            Bringhurst::TypeSignature.new(
               method: "#{ klass }##{ method_name }",
               arguments: args.map(&:class),
               result: result.class,
@@ -70,8 +70,8 @@ module TypeObserver
         define_singleton_method(method_name) do |*args|
           result = public_send(aliased_method_name, *args)
 
-          TypeObserver::Observer.instance.register_call(
-            TypeObserver::TypeSignature.new(
+          Bringhurst::TypeObserver.instance.register_call(
+            Bringhurst::TypeSignature.new(
               method: "#{ klass }.#{ method_name }",
               arguments: args.map(&:class),
               result: result.class,

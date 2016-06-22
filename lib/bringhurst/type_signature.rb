@@ -1,4 +1,4 @@
-module TypeObserver
+module Bringhurst
   class TypeSignature
     attr_reader :method, :arguments, :result
 

@@ -1,2 +1,2 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'type_observer'
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "bringhurst"

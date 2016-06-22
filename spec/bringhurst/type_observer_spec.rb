@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TypeObserver do
+describe Bringhurst::TypeObserver do
   class TestClass
     def test_method(a, b)
       a + b
@@ -12,7 +12,7 @@ describe TypeObserver do
   end
 
   def observer
-    TypeObserver::Observer.instance
+    Bringhurst::TypeObserver.instance
   end
 
   before(:all) do
@@ -21,7 +21,7 @@ describe TypeObserver do
 
   it "notices when instance methods in registered classes are called" do
     TestClass.new.test_method(2, 3)
-    result = TypeObserver::TypeSignature.new(
+    result = Bringhurst::TypeSignature.new(
       method: "TestClass#test_method",
       arguments: [Fixnum, Fixnum],
       result: Fixnum,
@@ -32,7 +32,7 @@ describe TypeObserver do
 
   it "notices when class methods in registered classes are called" do
     TestClass.test_class_method(2, 3)
-    result = TypeObserver::TypeSignature.new(
+    result = Bringhurst::TypeSignature.new(
       method: "TestClass.test_class_method",
       arguments: [Fixnum, Fixnum],
       result: Fixnum,

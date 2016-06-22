@@ -1,14 +1,14 @@
 require "spec_helper"
 
-describe TypeObserver::TypeSignature do
+describe Bringhurst::TypeSignature do
   describe "#==" do
     it "returns true if all attributes are equal" do
-      sig_a = TypeObserver::TypeSignature.new(
+      sig_a = Bringhurst::TypeSignature.new(
         method: "foo",
         arguments: [Fixnum],
         result: Fixnum,
       )
-      sig_b = TypeObserver::TypeSignature.new(
+      sig_b = Bringhurst::TypeSignature.new(
         method: "foo",
         arguments: [Fixnum],
         result: Fixnum,
@@ -20,7 +20,7 @@ describe TypeObserver::TypeSignature do
 
   describe "#to_s" do
     it "formats the signature in a Haskell-y style" do
-      signature = TypeObserver::TypeSignature.new(
+      signature = Bringhurst::TypeSignature.new(
         method: "SomeClass#foo",
         arguments: [Fixnum, String],
         result: Fixnum,
