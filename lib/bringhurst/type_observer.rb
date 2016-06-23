@@ -41,8 +41,8 @@ module Bringhurst
       klass.class_eval do
         alias_method(aliased_method_name, method_name)
 
-        define_method(method_name) do |*args|
-          result = public_send(aliased_method_name, *args)
+        define_method(method_name) do |*args, &block|
+          result = public_send(aliased_method_name, *args, &block)
 
           Bringhurst::TypeObserver.instance.register_call(
             Bringhurst::TypeSignature.new(
@@ -69,8 +69,8 @@ module Bringhurst
           method_name,
         )
 
-        define_singleton_method(method_name) do |*args|
-          result = public_send(aliased_method_name, *args)
+        define_singleton_method(method_name) do |*args, &block|
+          result = public_send(aliased_method_name, *args, &block)
 
           Bringhurst::TypeObserver.instance.register_call(
             Bringhurst::TypeSignature.new(
