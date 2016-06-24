@@ -42,6 +42,11 @@ module Bringhurst
         alias_method(aliased_method_name, method_name)
 
         define_method(method_name) do |*args, &block|
+          arguments = args.map(&:class)
+          if block
+            arguments << Proc
+          end
+
           result = public_send(aliased_method_name, *args, &block)
 
           Bringhurst::TypeObserver.instance.register_call(
@@ -49,7 +54,7 @@ module Bringhurst
               klass: klass,
               method: method_name,
               method_kind: :instance,
-              arguments: args.map(&:class),
+              arguments: arguments,
               result: result.class,
             ),
           )
@@ -70,6 +75,11 @@ module Bringhurst
         )
 
         define_singleton_method(method_name) do |*args, &block|
+          arguments = args.map(&:class)
+          if block
+            arguments << Proc
+          end
+
           result = public_send(aliased_method_name, *args, &block)
 
           Bringhurst::TypeObserver.instance.register_call(
@@ -77,7 +87,7 @@ module Bringhurst
               klass: klass,
               method: method_name,
               method_kind: :class,
-              arguments: args.map(&:class),
+              arguments: arguments,
               result: result.class,
             ),
           )
