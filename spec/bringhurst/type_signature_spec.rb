@@ -32,7 +32,7 @@ describe Bringhurst::TypeSignature do
         result: Fixnum,
       )
 
-      expect(signature.to_s).to eq("SomeClass#foo: Fixnum -> String -> Fixnum")
+      expect(signature.to_s).to eq("SomeClass#foo :: Fixnum -> String -> Fixnum")
     end
 
     context "when the method doesn't take any arguments" do
@@ -45,7 +45,7 @@ describe Bringhurst::TypeSignature do
           result: Fixnum,
         )
 
-        expect(signature.to_s).to eq("SomeClass#foo: Fixnum")
+        expect(signature.to_s).to eq("SomeClass#foo :: Fixnum")
       end
     end
   end

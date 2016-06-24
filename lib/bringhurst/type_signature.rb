@@ -20,7 +20,7 @@ module Bringhurst
     end
 
     def to_s
-      "#{ method_name }: #{ (arguments + [result]).map(&:to_s).join(" -> ") }"
+      "#{ method_name } :: #{ (arguments + [result]).map(&:to_s).join(" -> ") }"
     end
 
     private
