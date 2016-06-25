@@ -4,6 +4,9 @@ Bringhurst watches you run your methods, infers their types, and formats the
 results. It does this by aliasing each method in a user-defined collection of
 classes and noting the types of their arguments and results.
 
+**Disclaimer**: This is still just a prototype! Don't use it for anything
+serious just yet!
+
 ## Installation
 
 Add this line to your application's Gemfile:
