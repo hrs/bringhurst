@@ -14,6 +14,14 @@ module Bringhurst
       wrap_class_methods_of(klass)
     end
 
+    def observe_instance_method(klass, method_name)
+      wrap_instance_method(klass, method_name)
+    end
+
+    def observe_class_method(klass, method_name)
+      wrap_class_method(klass, method_name)
+    end
+
     def register_call(signature)
       @method_calls << signature
     end
