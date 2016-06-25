@@ -1,4 +1,4 @@
-# Bringhurst
+## Bringhurst [![Build Status](https://secure.travis-ci.org/hrs/bringhurst.png?branch=master&.png)](http://travis-ci.org/hrs/bringhurst)
 
 Bringhurst watches you run your methods, infers their types, and formats the
 results. It does this by aliasing each method in a user-defined collection of
