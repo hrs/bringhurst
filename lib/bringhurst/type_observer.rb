@@ -1,11 +1,8 @@
 require "securerandom"
-require "singleton"
 require_relative "type_signature"
 
 module Bringhurst
   class TypeObserver
-    include Singleton
-
     attr_reader :method_calls
 
     def initialize
@@ -37,6 +34,7 @@ module Bringhurst
 
     def wrap_instance_method(klass, method_name)
       aliased_method_name = aliased_method_name_for(method_name)
+      observer = self
 
       klass.class_eval do
         alias_method(aliased_method_name, method_name)
@@ -49,7 +47,7 @@ module Bringhurst
 
           result = public_send(aliased_method_name, *args, &block)
 
-          Bringhurst::TypeObserver.instance.register_call(
+          observer.register_call(
             Bringhurst::TypeSignature.new(
               klass: klass,
               method: method_name,
@@ -66,6 +64,7 @@ module Bringhurst
 
     def wrap_class_method(klass, method_name)
       aliased_method_name = aliased_method_name_for(method_name)
+      observer = self
 
       klass.class_eval do
         singleton_class.send(
@@ -82,7 +81,7 @@ module Bringhurst
 
           result = public_send(aliased_method_name, *args, &block)
 
-          Bringhurst::TypeObserver.instance.register_call(
+          observer.register_call(
             Bringhurst::TypeSignature.new(
               klass: klass,
               method: method_name,

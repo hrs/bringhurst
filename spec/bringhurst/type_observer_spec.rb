@@ -19,16 +19,9 @@ describe Bringhurst::TypeObserver do
     end
   end
 
-  def observer
-    Bringhurst::TypeObserver.instance
-  end
-
-  before(:all) do
-    observer.observe_class(TestClass)
-  end
-
   context "when observing instance methods" do
     it "notices when methods in registered classes are called" do
+      observer = Bringhurst::TypeObserver.new
       result = Bringhurst::TypeSignature.new(
         klass: TestClass,
         method: :test_method,
@@ -37,12 +30,14 @@ describe Bringhurst::TypeObserver do
         result: Fixnum,
       )
 
+      observer.observe_class(TestClass)
       TestClass.new.test_method(2, 3)
 
       expect(observer.method_calls).to include(result)
     end
 
     it "notices when methods are called with blocks" do
+      observer = Bringhurst::TypeObserver.new
       result = Bringhurst::TypeSignature.new(
         klass: TestClass,
         method: :test_method_with_block,
@@ -51,6 +46,7 @@ describe Bringhurst::TypeObserver do
         result: Fixnum,
       )
 
+      observer.observe_class(TestClass)
       TestClass.new.test_method_with_block(2, 3) { |a, b| a + b }
 
       expect(observer.method_calls).to include(result)
@@ -59,6 +55,7 @@ describe Bringhurst::TypeObserver do
 
   context "when observing class methods" do
     it "notices when methods in registered classes are called" do
+      observer = Bringhurst::TypeObserver.new
       result = Bringhurst::TypeSignature.new(
         klass: TestClass,
         method: :test_class_method,
@@ -67,12 +64,14 @@ describe Bringhurst::TypeObserver do
         result: Fixnum,
       )
 
+      observer.observe_class(TestClass)
       TestClass.test_class_method(2, 3)
 
       expect(observer.method_calls).to include(result)
     end
 
     it "notices when methods are called with blocks" do
+      observer = Bringhurst::TypeObserver.new
       result = Bringhurst::TypeSignature.new(
         klass: TestClass,
         method: :test_class_method_with_block,
@@ -81,6 +80,7 @@ describe Bringhurst::TypeObserver do
         result: Fixnum,
       )
 
+      observer.observe_class(TestClass)
       TestClass.test_class_method_with_block(2, 3) { |a, b| a + b }
 
       expect(observer.method_calls).to include(result)
