@@ -38,9 +38,7 @@ require "bringhurst"
 
 RSpec.configure do |config|
   # ...
-  def observer
-    Bringhurst::TypeObserver.instance
-  end
+  observer = Bringhurst::TypeObserver.new
 
   config.before(:suite) do
     observer.observe_class(Gitsh::CapturingEnvironment)
@@ -67,40 +65,42 @@ And see the results:
 ...........................................
 Observed Type Signatures
 ========================
-Gitsh::CapturingEnvironment#captured_output: String
-Gitsh::CapturingEnvironment#output_stream: IO
-Gitsh::Completer#call: String -> Array
-Gitsh::Environment#[]=: String -> String -> String
-Gitsh::Environment#[]=: Symbol -> String -> String
-Gitsh::Environment#config_variables: Hash
-Gitsh::Environment#error_stream: StringIO
-Gitsh::Environment#fetch: String -> NilClass
-Gitsh::Environment#fetch: String -> String
-Gitsh::Environment#fetch: String -> TrueClass -> String
-Gitsh::Environment#fetch: Symbol -> String
-Gitsh::Environment#git_aliases: Array
-Gitsh::Environment#git_command: FalseClass -> String
-Gitsh::Environment#git_command: String
-Gitsh::Environment#git_command: TrueClass -> String
-Gitsh::Environment#git_command=: String -> String
-Gitsh::Environment#git_commands: RSpec::Mocks::Double
-Gitsh::Environment#input_stream: IO
-Gitsh::Environment#input_stream: RSpec::Mocks::Double
-Gitsh::Environment#output_stream: IO
-Gitsh::Environment#output_stream: RSpec::Mocks::Double
-Gitsh::Environment#output_stream: StringIO
-Gitsh::Environment#print: String -> NilClass
-Gitsh::Environment#puts: String -> NilClass
-Gitsh::Environment#puts_error: String -> NilClass
-Gitsh::Environment#readline_version: String
-Gitsh::Environment#repo_config_color: String -> String -> RSpec::Mocks::Double
-Gitsh::Environment#repo_current_head: RSpec::Mocks::Double
-Gitsh::Environment#repo_has_modified_files?: RSpec::Mocks::Double
-Gitsh::Environment#repo_has_untracked_files?: RSpec::Mocks::Double
-Gitsh::Environment#repo_heads: RSpec::Mocks::Double
-Gitsh::Environment#repo_initialized?: RSpec::Mocks::Double
-Gitsh::Environment#tty?: FalseClass
-Gitsh::Environment#tty?: TrueClass
+Gitsh::CapturingEnvironment#captured_output :: String
+Gitsh::CapturingEnvironment#output_stream :: IO
+Gitsh::Completer#call :: String -> Array
+Gitsh::Environment#[]= :: String -> String -> String
+Gitsh::Environment#[]= :: Symbol -> String -> String
+Gitsh::Environment#config_variables :: Hash
+Gitsh::Environment#error_stream :: StringIO
+Gitsh::Environment#fetch :: String -> Proc -> NilClass
+Gitsh::Environment#fetch :: String -> Proc -> String
+Gitsh::Environment#fetch :: String -> String
+Gitsh::Environment#fetch :: String -> TrueClass -> Proc -> String
+Gitsh::Environment#fetch :: Symbol -> Proc -> String
+Gitsh::Environment#fetch :: Symbol -> String
+Gitsh::Environment#git_aliases :: Array
+Gitsh::Environment#git_command :: FalseClass -> String
+Gitsh::Environment#git_command :: String
+Gitsh::Environment#git_command :: TrueClass -> String
+Gitsh::Environment#git_command= :: String -> String
+Gitsh::Environment#git_commands :: RSpec::Mocks::Double
+Gitsh::Environment#input_stream :: IO
+Gitsh::Environment#input_stream :: RSpec::Mocks::Double
+Gitsh::Environment#output_stream :: IO
+Gitsh::Environment#output_stream :: RSpec::Mocks::Double
+Gitsh::Environment#output_stream :: StringIO
+Gitsh::Environment#print :: String -> NilClass
+Gitsh::Environment#puts :: String -> NilClass
+Gitsh::Environment#puts_error :: String -> NilClass
+Gitsh::Environment#readline_version :: String
+Gitsh::Environment#repo_config_color :: String -> String -> RSpec::Mocks::Double
+Gitsh::Environment#repo_current_head :: RSpec::Mocks::Double
+Gitsh::Environment#repo_has_modified_files? :: RSpec::Mocks::Double
+Gitsh::Environment#repo_has_untracked_files? :: RSpec::Mocks::Double
+Gitsh::Environment#repo_heads :: RSpec::Mocks::Double
+Gitsh::Environment#repo_initialized? :: RSpec::Mocks::Double
+Gitsh::Environment#tty? :: FalseClass
+Gitsh::Environment#tty? :: TrueClass
 ```
 
 (I'm hijacking the lovely [gitsh](https://github.com/thoughtbot/gitsh) here for
